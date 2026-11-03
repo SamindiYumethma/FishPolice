@@ -1,0 +1,152 @@
+.screen {
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+.header {
+  padding: 0 4cqw;
+}
+.runInfo {
+  z-index: 5;
+  margin-top: 1cqw;
+}
+.scroll {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  margin-top: 1cqw;
+  -webkit-mask-image: linear-gradient(transparent, #000 5cqw);
+  mask-image: linear-gradient(transparent, #000 5cqw);
+}
+.map {
+  position: relative;
+  width: 100%;
+  /* Art + its mirror image, so the repeat has no visible seam. */
+  background: url("/assets/bg_level_map_tall.webp") center top / 100% auto repeat-y;
+}
+.trail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.trailBase {
+  fill: none;
+  stroke: rgba(255, 236, 190, 0.85);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 2px 0 rgba(140, 90, 20, 0.35));
+}
+.trailDash {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2.5;
+  stroke-dasharray: 2 10;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.node {
+  position: absolute;
+  width: 19cqw;
+  transform: translate(-50%, -60%);
+  display: flex;
+  justify-content: center;
+}
+.nodeImg {
+  width: 100%;
+  filter: drop-shadow(0 1cqw 0.8cqw rgba(0, 30, 60, 0.4));
+}
+.node:active .nodeImg {
+  transform: scale(0.92);
+}
+.current {
+  width: 21cqw;
+  animation: bob 1.4s ease-in-out infinite;
+  z-index: 2;
+}
+.locked {
+  width: 16cqw;
+}
+.locked .nodeImg {
+  filter: drop-shadow(0 1cqw 0.8cqw rgba(0, 30, 60, 0.4)) saturate(0.7);
+}
+@keyframes bob {
+  0%, 100% { transform: translate(-50%, -60%); }
+  50% { transform: translate(-50%, -66%); }
+}
+.nodeNum {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-display);
+  font-size: 7cqw;
+  color: #fff;
+  -webkit-text-stroke: 0.5cqw var(--navy);
+  paint-order: stroke fill;
+}
+.nodeTag {
+  position: absolute;
+  bottom: -2cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 7cqw;
+  padding: 0 1.4cqw;
+  border-radius: 3cqw;
+  background: var(--navy);
+  border: 0.4cqw solid #fff;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 3.6cqw;
+  line-height: 1.4;
+  text-align: center;
+}
+.done {
+  width: 17cqw;
+}
+/* Earned stars arc over the node, where the original art had them. */
+.stars {
+  position: absolute;
+  top: -5.5cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  gap: 0.2cqw;
+}
+.stars img {
+  width: 6cqw;
+  filter: drop-shadow(0 0.4cqw 0.3cqw rgba(0, 0, 0, 0.35));
+}
+.stars img:nth-child(2) {
+  width: 7.5cqw;
+  margin-bottom: 1.6cqw;
+}
+.starOff {
+  filter: grayscale(1) brightness(0.6);
+  opacity: 0.7;
+}
+.boss {
+  position: absolute;
+  width: 9cqw;
+  right: -6cqw;
+  top: -1cqw;
+  filter: drop-shadow(0 0.5cqw 0.5cqw rgba(0, 0, 0, 0.35));
+}
+.shake {
+  animation: shake 0.4s ease-in-out;
+}
+@keyframes shake {
+  0%, 100% { transform: translate(-50%, -60%); }
+  25% { transform: translate(-58%, -60%) rotate(-6deg); }
+  75% { transform: translate(-42%, -60%) rotate(6deg); }
+}
+.chestEnd {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 1cqw 1cqw rgba(0, 0, 0, 0.4));
+}

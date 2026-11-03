@@ -1,0 +1,478 @@
+{
+  "answer_tile": {
+    "w": 371,
+    "h": 400
+  },
+  "app_icon": {
+    "w": 512,
+    "h": 512
+  },
+  "avatar_blue": {
+    "w": 255,
+    "h": 260
+  },
+  "avatar_frame": {
+    "w": 237,
+    "h": 260
+  },
+  "avatar_green": {
+    "w": 254,
+    "h": 260
+  },
+  "avatar_orange": {
+    "w": 255,
+    "h": 260
+  },
+  "avatar_pink": {
+    "w": 257,
+    "h": 260
+  },
+  "bg_game_over": {
+    "w": 752,
+    "h": 1344
+  },
+  "bg_gameplay_reef": {
+    "w": 752,
+    "h": 1344
+  },
+  "bg_level_map": {
+    "w": 752,
+    "h": 1344
+  },
+  "bg_main_menu_beach": {
+    "w": 752,
+    "h": 1344
+  },
+  "bg_rebirth_challenge": {
+    "w": 752,
+    "h": 1344
+  },
+  "bg_victory": {
+    "w": 752,
+    "h": 1344
+  },
+  "bomb": {
+    "w": 327,
+    "h": 400
+  },
+  "btn_account": {
+    "w": 520,
+    "h": 271
+  },
+  "btn_blank_blue": {
+    "w": 520,
+    "h": 273
+  },
+  "btn_blank_cream": {
+    "w": 520,
+    "h": 252
+  },
+  "btn_blank_disabled": {
+    "w": 520,
+    "h": 222
+  },
+  "btn_blank_green": {
+    "w": 520,
+    "h": 269
+  },
+  "btn_blank_pressed": {
+    "w": 520,
+    "h": 238
+  },
+  "btn_blank_red": {
+    "w": 520,
+    "h": 261
+  },
+  "btn_continue": {
+    "w": 520,
+    "h": 250
+  },
+  "btn_create_account": {
+    "w": 520,
+    "h": 232
+  },
+  "btn_earn_it_back": {
+    "w": 520,
+    "h": 216
+  },
+  "btn_give_up": {
+    "w": 520,
+    "h": 252
+  },
+  "btn_lets_go": {
+    "w": 520,
+    "h": 278
+  },
+  "btn_log_in": {
+    "w": 520,
+    "h": 282
+  },
+  "btn_log_out": {
+    "w": 520,
+    "h": 247
+  },
+  "btn_play": {
+    "w": 520,
+    "h": 278
+  },
+  "btn_play_as_guest": {
+    "w": 520,
+    "h": 262
+  },
+  "btn_quit": {
+    "w": 520,
+    "h": 299
+  },
+  "btn_restart": {
+    "w": 520,
+    "h": 268
+  },
+  "btn_resume": {
+    "w": 520,
+    "h": 254
+  },
+  "btn_retry": {
+    "w": 520,
+    "h": 284
+  },
+  "btn_send_link": {
+    "w": 520,
+    "h": 247
+  },
+  "btn_sign_up": {
+    "w": 520,
+    "h": 265
+  },
+  "btn_start": {
+    "w": 520,
+    "h": 282
+  },
+  "btn_submit": {
+    "w": 520,
+    "h": 277
+  },
+  "checkbox_checked": {
+    "w": 193,
+    "h": 200
+  },
+  "checkbox_unchecked": {
+    "w": 195,
+    "h": 200
+  },
+  "chest_closed": {
+    "w": 400,
+    "h": 359
+  },
+  "chest_locked": {
+    "w": 400,
+    "h": 379
+  },
+  "chest_open": {
+    "w": 355,
+    "h": 400
+  },
+  "civilian_fish_blue": {
+    "w": 395,
+    "h": 400
+  },
+  "civilian_fish_green": {
+    "w": 397,
+    "h": 400
+  },
+  "civilian_fish_pink": {
+    "w": 400,
+    "h": 387
+  },
+  "civilian_fish_yellow": {
+    "w": 385,
+    "h": 400
+  },
+  "coin": {
+    "w": 385,
+    "h": 400
+  },
+  "coin_stack": {
+    "w": 400,
+    "h": 361
+  },
+  "coral_hole": {
+    "w": 400,
+    "h": 346
+  },
+  "crab_crook": {
+    "w": 400,
+    "h": 337
+  },
+  "crab_crook_arrested": {
+    "w": 374,
+    "h": 400
+  },
+  "fx_combo": {
+    "w": 392,
+    "h": 400
+  },
+  "fx_hit": {
+    "w": 400,
+    "h": 388
+  },
+  "fx_miss": {
+    "w": 400,
+    "h": 398
+  },
+  "gem": {
+    "w": 400,
+    "h": 356
+  },
+  "golden_badge_powerup": {
+    "w": 400,
+    "h": 393
+  },
+  "heart_empty": {
+    "w": 200,
+    "h": 172
+  },
+  "heart_full": {
+    "w": 200,
+    "h": 184
+  },
+  "hero_happy": {
+    "w": 352,
+    "h": 400
+  },
+  "hero_idle": {
+    "w": 353,
+    "h": 400
+  },
+  "hero_sad": {
+    "w": 306,
+    "h": 400
+  },
+  "hero_shocked": {
+    "w": 301,
+    "h": 400
+  },
+  "icon_btn_back": {
+    "w": 189,
+    "h": 200
+  },
+  "icon_btn_close": {
+    "w": 192,
+    "h": 200
+  },
+  "icon_btn_home": {
+    "w": 195,
+    "h": 200
+  },
+  "icon_btn_leaderboard": {
+    "w": 188,
+    "h": 200
+  },
+  "icon_btn_pause": {
+    "w": 193,
+    "h": 200
+  },
+  "icon_btn_settings": {
+    "w": 184,
+    "h": 200
+  },
+  "icon_btn_sound_off": {
+    "w": 188,
+    "h": 200
+  },
+  "icon_btn_sound_on": {
+    "w": 183,
+    "h": 200
+  },
+  "icon_case_file": {
+    "w": 200,
+    "h": 191
+  },
+  "icon_email": {
+    "w": 200,
+    "h": 160
+  },
+  "icon_eye_hide": {
+    "w": 200,
+    "h": 166
+  },
+  "icon_eye_show": {
+    "w": 200,
+    "h": 149
+  },
+  "icon_handcuffs": {
+    "w": 200,
+    "h": 168
+  },
+  "icon_language": {
+    "w": 191,
+    "h": 200
+  },
+  "icon_music": {
+    "w": 188,
+    "h": 200
+  },
+  "icon_password": {
+    "w": 157,
+    "h": 200
+  },
+  "icon_stopwatch": {
+    "w": 162,
+    "h": 200
+  },
+  "icon_target": {
+    "w": 192,
+    "h": 200
+  },
+  "icon_user": {
+    "w": 165,
+    "h": 200
+  },
+  "icon_vibration": {
+    "w": 200,
+    "h": 170
+  },
+  "ink_splat": {
+    "w": 359,
+    "h": 400
+  },
+  "input_field_blank": {
+    "w": 720,
+    "h": 279
+  },
+  "key": {
+    "w": 357,
+    "h": 400
+  },
+  "leaderboard_row": {
+    "w": 720,
+    "h": 175
+  },
+  "level_badge": {
+    "w": 318,
+    "h": 400
+  },
+  "loader_bubble_bar": {
+    "w": 720,
+    "h": 134
+  },
+  "loader_ship_wheel": {
+    "w": 396,
+    "h": 400
+  },
+  "loader_swimming_fish": {
+    "w": 400,
+    "h": 232
+  },
+  "logo": {
+    "w": 760,
+    "h": 569
+  },
+  "medal_bronze": {
+    "w": 216,
+    "h": 260
+  },
+  "medal_gold": {
+    "w": 208,
+    "h": 260
+  },
+  "medal_silver": {
+    "w": 219,
+    "h": 260
+  },
+  "node_completed": {
+    "w": 210,
+    "h": 260
+  },
+  "node_current": {
+    "w": 226,
+    "h": 260
+  },
+  "node_done": {
+    "w": 210,
+    "h": 173
+  },
+  "node_locked": {
+    "w": 244,
+    "h": 260
+  },
+  "number_input_field": {
+    "w": 720,
+    "h": 259
+  },
+  "octopus_disguised": {
+    "w": 358,
+    "h": 400
+  },
+  "photo_frame": {
+    "w": 900,
+    "h": 638
+  },
+  "popup_tall": {
+    "w": 652,
+    "h": 900
+  },
+  "popup_wide": {
+    "w": 900,
+    "h": 492
+  },
+  "progress_bar": {
+    "w": 720,
+    "h": 297
+  },
+  "pufferfish": {
+    "w": 400,
+    "h": 370
+  },
+  "rare_item_pearl": {
+    "w": 357,
+    "h": 400
+  },
+  "rebirth_heart": {
+    "w": 400,
+    "h": 330
+  },
+  "score_panel": {
+    "w": 720,
+    "h": 278
+  },
+  "shark_boss": {
+    "w": 283,
+    "h": 400
+  },
+  "splash_screen": {
+    "w": 752,
+    "h": 1344
+  },
+  "squid": {
+    "w": 252,
+    "h": 400
+  },
+  "star_rating": {
+    "w": 400,
+    "h": 313
+  },
+  "timer_frame": {
+    "w": 720,
+    "h": 318
+  },
+  "title_ribbon": {
+    "w": 820,
+    "h": 304
+  },
+  "toggle_off": {
+    "w": 200,
+    "h": 103
+  },
+  "toggle_on": {
+    "w": 200,
+    "h": 110
+  },
+  "trophy": {
+    "w": 399,
+    "h": 400
+  },
+  "xp_star": {
+    "w": 400,
+    "h": 379
+  }
+}

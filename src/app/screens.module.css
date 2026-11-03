@@ -1,0 +1,366 @@
+/* Shared layout for menu / onboarding screens. */
+
+.loadingWrap {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6cqw 0 8cqw;
+}
+.loadingBottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3cqw;
+}
+
+/* welcome */
+.welcome {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4cqw 0 4cqw;
+}
+.welcomeButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5cqw;
+}
+
+/* auth forms */
+.authScroll {
+  flex: 1;
+  width: calc(100% + 8cqw);
+  margin: 0 -4cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 4cqw 6cqw;
+}
+.authHero {
+  margin-bottom: -15cqw;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.6cqw;
+}
+.formRow {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -1.5cqw;
+}
+.formFooter {
+  font-weight: 800;
+  font-size: 3.6cqw;
+  color: var(--ink);
+  text-align: center;
+}
+.formFooter button {
+  color: var(--blue);
+  font-weight: 900;
+  text-decoration: underline;
+  text-underline-offset: 0.6cqw;
+}
+.backBtn {
+  position: absolute;
+  top: calc(env(safe-area-inset-top, 0px) + 3cqw);
+  left: 4cqw;
+  z-index: 10;
+}
+
+/* profile setup */
+.avatarBig {
+  position: relative;
+  width: 40cqw;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatarRow {
+  display: flex;
+  gap: 2.4cqw;
+  justify-content: center;
+}
+.avatarOpt {
+  position: relative;
+  width: 15cqw;
+  border-radius: 50%;
+  transition: transform 0.15s;
+}
+.avatarOpt img {
+  width: 100%;
+  display: block;
+}
+.avatarOpt[aria-checked="true"] {
+  transform: scale(1.12);
+}
+.avatarOpt[aria-checked="true"]::after {
+  content: "✓";
+  position: absolute;
+  right: -0.5cqw;
+  bottom: -0.5cqw;
+  width: 5.5cqw;
+  height: 5.5cqw;
+  border-radius: 50%;
+  background: var(--green);
+  border: 0.6cqw solid #fff;
+  color: #fff;
+  font-weight: 900;
+  font-size: 3.4cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* main menu */
+.menuTop {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.menuTopRight {
+  display: flex;
+  align-items: center;
+  gap: 2cqw;
+}
+.avatarBtn {
+  width: 11cqw;
+  border-radius: 50%;
+}
+.avatarBtn img {
+  width: 100%;
+  display: block;
+}
+.menuCenter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  gap: 1cqh;
+  width: 100%;
+  min-height: 0;
+  padding: 0.5cqh 0;
+}
+.menuCenter > * {
+  flex-shrink: 0;
+}
+.greeting {
+  font-family: var(--font-display);
+  color: #fff;
+  font-size: 5cqw;
+  -webkit-text-stroke: 0.45cqw var(--navy);
+  paint-order: stroke fill;
+  text-align: center;
+  line-height: 1.15;
+}
+.greeting small {
+  display: block;
+  font-size: 3.6cqw;
+  color: #ffe77a;
+}
+.menuBottom {
+  display: flex;
+  gap: 5cqw;
+  justify-content: center;
+  padding-bottom: 2cqw;
+}
+.runStrip {
+  display: flex;
+  gap: 2cqw;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* stat rows inside panels */
+.statList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2cqw;
+}
+.statRow {
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  padding: 1.8cqw 3cqw;
+  border-radius: 3.5cqw;
+  background: rgba(255, 255, 255, 0.7);
+  border: 0.5cqw solid var(--cream-dark);
+  font-weight: 900;
+  font-size: 4.4cqw;
+  color: var(--navy);
+}
+.statRow img {
+  width: 9cqw;
+}
+.statRow span {
+  flex: 1;
+}
+.statRow b {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 5.4cqw;
+}
+
+/* settings */
+.settingRow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  font-weight: 900;
+  font-size: 4.6cqw;
+  color: var(--navy);
+}
+.settingRow > img {
+  width: 9cqw;
+}
+.settingRow > span {
+  flex: 1;
+}
+.settingNote {
+  font-size: 3cqw;
+  color: var(--muted);
+  font-weight: 700;
+  display: block;
+}
+.accountBox {
+  width: 100%;
+  text-align: center;
+  font-weight: 800;
+  font-size: 3.5cqw;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+/* leaderboard */
+.boardList {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.8cqw;
+  max-height: 100%;
+}
+.boardRow {
+  display: flex;
+  align-items: center;
+  gap: 2.4cqw;
+  padding: 1.6cqw 3cqw 1.6cqw 1.6cqw;
+  border-radius: 4cqw;
+  background: linear-gradient(#fffaf0, #f5e6c4);
+  border: 0.6cqw solid #e8c77a;
+  box-shadow: 0 0.6cqw 0 rgba(160, 110, 20, 0.25);
+}
+.boardRow.me {
+  background: linear-gradient(#bff0ff, #7fd8ff);
+  border-color: #2aa9f0;
+}
+.rankBadge {
+  width: 9cqw;
+  height: 9cqw;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: linear-gradient(#3f8ff5, #1559c9);
+  border: 0.5cqw solid #9fdcff;
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 4.4cqw;
+}
+.rankBadge img {
+  width: 10cqw;
+}
+.boardAvatar {
+  width: 11cqw;
+  flex-shrink: 0;
+}
+.boardName {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+.boardName b {
+  font-weight: 900;
+  font-size: 4.2cqw;
+  color: var(--navy);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.boardName span {
+  display: flex;
+  align-items: center;
+  gap: 1cqw;
+  font-family: var(--font-display);
+  font-size: 4cqw;
+  color: #8a5a00;
+}
+.boardName span img {
+  width: 4.5cqw;
+}
+.boardLevel {
+  font-size: 3cqw;
+  font-weight: 800;
+  color: var(--muted);
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* game over */
+.gameOver {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.gameOverCard {
+  width: 72cqw;
+  padding: 4cqw;
+  border-radius: 6cqw;
+  background: linear-gradient(#fffaf0, #f3dfb2);
+  border: 1cqw solid #2b7de9;
+  box-shadow: 0 0 0 0.8cqw #ffd34a, 0 2cqw 4cqw rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 2cqw;
+}
+.badgeNew {
+  align-self: center;
+  font-family: var(--font-display);
+  font-size: 4cqw;
+  color: #fff;
+  background: linear-gradient(#ff8a00, #e65100);
+  border-radius: 4cqw;
+  padding: 1cqw 4cqw;
+  border: 0.5cqw solid #ffe08a;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  50% { transform: scale(1.08); }
+}
+.rowButtons {
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+}
