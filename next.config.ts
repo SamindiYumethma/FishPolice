@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   devIndicators: false,
-  // This demo lives inside the main project; keep Next from using the parent folder as root.
+  // Keep Next from using a parent folder as the root if it finds another lockfile there.
   outputFileTracingRoot: process.cwd(),
   eslint: { ignoreDuringBuilds: true },
 };

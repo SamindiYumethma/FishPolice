@@ -2,9 +2,11 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { BOSS_EVERY, caseLabel, DEMO_PLAYER, LEVEL_COUNT } from "../../lib/mock";
+import { caseLabel, LEVEL_COUNT } from "../../game/levels";
+import { canPlay, isSolved, runScore } from "../../game/player";
 import { Screen } from "../../components/Screen";
 import { Hearts, IconButton, Pill, Ribbon, Sprite } from "../../components/ui";
+import { usePlayer, useRequireProfile } from "../../state/PlayerProvider";
 import s from "./cases.module.css";
 
 const STEP = 23; // cqw between nodes
@@ -17,14 +19,21 @@ function nodeX(i: number) {
 
 export default function CasesPage() {
   const router = useRouter();
+  const { save } = usePlayer();
+  const hasDetective = useRequireProfile();
   const scrollRef = useRef<HTMLDivElement>(null);
-  const current = DEMO_PLAYER.highestUnlocked;
+  const current = save.highestUnlocked;
   const mapHeight = BOTTOM_PAD + TOP_PAD + (LEVEL_COUNT - 1) * STEP;
 
   const nodes = useMemo(
     () => Array.from({ length: LEVEL_COUNT }, (_, i) => ({ level: i + 1, x: nodeX(i), y: mapHeight - BOTTOM_PAD - i * STEP })),
     [mapHeight],
   );
+
+  const outOfLives = save.lives <= 0;
+  useEffect(() => {
+    if (hasDetective && outOfLives) router.replace("/game-over");
+  }, [hasDetective, outOfLives, router]);
 
   // Scroll so the current case sits a little below the middle of the screen.
   useEffect(() => {
@@ -33,6 +42,8 @@ export default function CasesPage() {
     if (el && node) el.scrollTop = node.offsetTop - el.clientHeight * 0.6;
   }, [current]);
 
+  if (!hasDetective || outOfLives) return null;
+
   const pathD = nodes.map((n, i) => `${i ? "L" : "M"}${n.x} ${n.y}`).join(" ");
 
   return (
@@ -40,10 +51,12 @@ export default function CasesPage() {
       <div className={`top-bar ${s.header}`}>
         <IconButton icon="icon_btn_back" label="Back to menu" size={12} onClick={() => router.replace("/menu")} />
         <Ribbon width={50}>Cases</Ribbon>
-        <Hearts lives={DEMO_PLAYER.lives} size={7} />
+        <Hearts lives={save.lives} size={7} />
       </div>
       <div className={s.runInfo}>
-        <Pill icon="xp_star" className="cream">Run score {DEMO_PLAYER.runScore.toLocaleString()}</Pill>
+        <Pill icon="xp_star" className="cream">
+          Run score {runScore(save).toLocaleString()}
+        </Pill>
       </div>
 
       <div ref={scrollRef} className={`${s.scroll} screen-scroll`}>
@@ -53,9 +66,8 @@ export default function CasesPage() {
             <path d={pathD} className={s.trailDash} />
           </svg>
           {nodes.map(({ level, x, y }) => {
-            const stars = DEMO_PLAYER.stars[level] ?? 0;
-            const state = level < current ? "done" : level === current ? "current" : "locked";
-            const boss = level % BOSS_EVERY === 0;
+            const stars = save.stars[level] ?? 0;
+            const state = isSolved(save, level) ? "done" : canPlay(save, level) ? "current" : "locked";
             return (
               <button
                 key={level}
@@ -64,7 +76,6 @@ export default function CasesPage() {
                 className={`${s.node} ${s[state]}`}
                 style={{ left: `${x}cqw`, top: `${y}cqw` }}
                 aria-label={`${caseLabel(level)}${state === "locked" ? " (locked)" : stars ? `, ${stars} stars` : ""}`}
-                // Locked cases do nothing in the UI demo.
                 onClick={() => state !== "locked" && router.push(`/play/${level}`)}
               >
                 <Sprite name={state === "done" ? "node_done" : state === "current" ? "node_current" : "node_locked"} className={s.nodeImg} />
@@ -77,7 +88,6 @@ export default function CasesPage() {
                     ))}
                   </span>
                 )}
-                {boss && <Sprite name="shark_boss" className={s.boss} />}
               </button>
             );
           })}

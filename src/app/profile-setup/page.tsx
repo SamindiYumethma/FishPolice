@@ -2,21 +2,27 @@
 
 import { Suspense, useState, type FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { AVATARS, avatarAsset, DEMO_PLAYER, NAME_MAX, type Avatar } from "../../lib/mock";
+import { AVATARS, avatarAsset, casesSolved, NAME_MAX, NAME_MIN, nameError, setProfile, type Avatar } from "../../game/player";
 import { Screen } from "../../components/Screen";
 import { GameButton, IconButton, Panel, Sprite, TextField } from "../../components/ui";
+import { usePlayer } from "../../state/PlayerProvider";
 import s from "../screens.module.css";
 
 function ProfileSetupInner() {
   const router = useRouter();
+  const { save, apply } = usePlayer();
   // ?edit=1 is the "edit your detective" version opened from the menu.
   const editing = useSearchParams().get("edit") === "1";
-  const [name, setName] = useState(editing ? DEMO_PLAYER.detectiveName : "");
-  const [avatar, setAvatar] = useState<Avatar>(DEMO_PLAYER.avatar);
+  const [name, setName] = useState(save.name);
+  const [avatar, setAvatar] = useState<Avatar>(save.avatar);
+  const [error, setError] = useState<string | null>(null);
 
-  // UI demo: nothing is saved, just go to the menu.
   const submit = (e: FormEvent) => {
     e.preventDefault();
+    const problem = nameError(name);
+    setError(problem);
+    if (problem) return;
+    apply((current) => setProfile(current, name, avatar));
     router.replace("/menu");
   };
 
@@ -45,25 +51,29 @@ function ProfileSetupInner() {
                 </button>
               ))}
             </div>
-            <TextField icon="icon_user" placeholder="Detective name" value={name} onChange={setName} maxLength={NAME_MAX} hint="Shown on the leaderboard." />
+            <TextField
+              icon="icon_user"
+              placeholder="Detective name"
+              value={name}
+              onChange={(value) => {
+                setName(value);
+                setError(null);
+              }}
+              maxLength={NAME_MAX}
+              error={error}
+              hint={`${NAME_MIN}–${NAME_MAX} characters.`}
+            />
             {editing && (
               <div className={s.statList}>
                 <div className={s.statRow}>
-                  <Sprite name="level_badge" />
-                  <span>{DEMO_PLAYER.rank}</span>
-                  <b>{DEMO_PLAYER.xp} XP</b>
+                  <Sprite name="icon_case_file" />
+                  <span>Cases solved</span>
+                  <b>{casesSolved(save)}</b>
                 </div>
                 <div className={s.statRow}>
                   <Sprite name="trophy" />
                   <span>High score</span>
-                  <b>{DEMO_PLAYER.highScore.toLocaleString()}</b>
-                </div>
-                <div className={s.statRow}>
-                  <Sprite name="rare_item_pearl" />
-                  <span>Pearls · Gems</span>
-                  <b>
-                    {DEMO_PLAYER.pearls} · {DEMO_PLAYER.gems}
-                  </b>
+                  <b>{save.highScore.toLocaleString()}</b>
                 </div>
               </div>
             )}

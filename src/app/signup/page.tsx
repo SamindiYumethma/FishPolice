@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { NAME_MAX } from "../../lib/mock";
+import { NAME_MAX, NAME_MIN } from "../../game/player";
+import { AccountsNotice } from "../../components/AccountsNotice";
 import { Screen } from "../../components/Screen";
 import { Checkbox, GameButton, IconButton, Modal, Panel, Sprite, TextField } from "../../components/ui";
 import s from "../screens.module.css";
@@ -15,11 +16,11 @@ export default function SignupPage() {
   const [confirm, setConfirm] = useState("");
   const [terms, setTerms] = useState(false);
   const [showTerms, setShowTerms] = useState(false);
+  const [notice, setNotice] = useState(false);
 
-  // UI demo: no account is created, just continue to profile setup.
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    router.push("/profile-setup");
+    setNotice(true);
   };
 
   return (
@@ -36,7 +37,7 @@ export default function SignupPage() {
               value={name}
               onChange={setName}
               maxLength={NAME_MAX}
-              hint={`3–${NAME_MAX} characters. Shown on the leaderboard.`}
+              hint={`${NAME_MIN}–${NAME_MAX} characters. Shown on the leaderboard.`}
             />
             <TextField icon="icon_email" type="email" inputMode="email" placeholder="Email" value={email} onChange={setEmail} />
             <TextField
@@ -75,6 +76,7 @@ export default function SignupPage() {
           </form>
         </Panel>
       </div>
+      {notice && <AccountsNotice onClose={() => setNotice(false)} />}
       {showTerms && (
         <Modal onBackdrop={() => setShowTerms(false)}>
           <Panel title="Terms" width={84} className="pop-in" onClose={() => setShowTerms(false)}>

@@ -2,19 +2,20 @@
 
 import { use, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { PLAYABLE_LEVEL } from "../../../lib/mock";
-import { PlayDemo } from "../../../play/PlayDemo";
+import { parseLevel } from "../../../game/levels";
+import { PlayGame } from "../../../play/PlayGame";
+import { useRequireProfile } from "../../../state/PlayerProvider";
 
 export default function PlayPage({ params }: { params: Promise<{ level: string }> }) {
-  const { level } = use(params);
+  const level = parseLevel(use(params).level);
   const router = useRouter();
-  const playable = Number(level) === PLAYABLE_LEVEL;
+  const hasDetective = useRequireProfile();
 
-  // Only Case 1 exists; any other level goes back to the map.
+  // Anything that isn't a real case number goes back to the map.
   useEffect(() => {
-    if (!playable) router.replace("/cases");
-  }, [playable, router]);
+    if (level === null) router.replace("/cases");
+  }, [level, router]);
 
-  if (!playable) return null;
-  return <PlayDemo key={level} level={PLAYABLE_LEVEL} />;
+  if (level === null || !hasDetective) return null;
+  return <PlayGame key={level} level={level} />;
 }

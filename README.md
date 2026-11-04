@@ -1,33 +1,40 @@
-# Fish Police — UI Demo
+# Fish Police: The Treasure Heist
 
-A standalone copy of the game's **screens and navigation only**, for demonstrating the UI.
-There is no game logic, no login/backend, no saving and no sound. All the numbers shown are sample data from `src/lib/mock.ts`.
+An underwater detective game for phones. Arrest the fish criminals, leave the innocent fish alone, and hit the target score before the clock runs out to unlock each stolen treasure chest.
+
+Built with Next.js and TypeScript.
 
 ## Run it
 
 ```bash
-cd ui-demo
 npm install
-npm run dev
+npm run dev        # http://localhost:3000
+npm test           # game logic tests
+npm run typecheck
 ```
 
-Then open http://localhost:3001 (it uses port 3001 so it can run beside the main game on 3000).
+On a computer the game shows as a phone-shaped column. To try it on a real phone, connect to the same Wi-Fi and open `http://<your-computer-ip>:3000`.
 
-## Screen flow
+## How the code is organised
 
-```
-Loading → Welcome ─┬─ Sign up ──→ Profile setup ──→ Menu
-                   ├─ Log in ───→ Menu   (Forgot password from here)
-                   └─ Play as guest → Profile setup
+| Folder | Job | Knows about |
+| --- | --- | --- |
+| `src/game/` | The rules: engine, levels, characters, lives and progress | Nothing else (no React, no browser) |
+| `src/data/` | Where a save is stored, behind the `PlayerRepository` interface | The save format |
+| `src/state/` | Shares the save with every screen | `game/`, `data/` |
+| `src/play/` | The screens of a case, and the link between engine and browser | `game/`, `state/` |
+| `src/app/` | The pages (Next.js routes) | Everything above |
+| `src/components/` | Reusable UI pieces (buttons, panels, hearts) | Asset names |
 
-Menu ─┬─ Play → Case map → Case briefing → 3-2-1 countdown → Gameplay (static board)
-      ├─ Leaderboard                                          ├─ Pause menu (Resume / Restart / Quit)
-      ├─ Settings (Account, Log out, Delete dialogs)          ├─ Demo: "Show win"  → Chest unlocked → next case / map
-      ├─ How to play (popup)                                  └─ Demo: "Show fail" → Case failed
-      └─ Avatar → Edit detective                                   └─ Earn it back → Rebirth challenge
-                                                                        ├─ Submit → Life recovered
-                                                                        └─ Demo: "Show wrong answer" → Not quite! → Give up → Game over
-```
+## Build status
 
-The small dark **Demo:** bars exist only in this demo so the win / fail screens can be shown without playing.
-Only Case 1 is playable; every other case is locked on the map, and /play/<n> for any other level sends you back to the map.
+- [x] **Phase 1: core game.** Engine, 10 cases with rising difficulty, lives, game over, saved progress, guest play.
+- [ ] **Phase 2: Rebirth Challenge.** Fish API through a Node.js route on the server.
+- [ ] **Phase 3: Firebase.** Accounts, sessions, cloud saves, leaderboard.
+- [ ] **Phase 4: polish.** Sound, settings, extra characters, more cases.
+
+Sign-up and login screens exist, but only explain that accounts aren't connected yet (Phase 3).
+
+## References
+
+See [REFERENCES.md](REFERENCES.md) for third-party code, assets and AI assistance.

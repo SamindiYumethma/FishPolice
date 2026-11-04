@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { AccountsNotice } from "../../components/AccountsNotice";
 import { Screen } from "../../components/Screen";
 import { GameButton, IconButton, Panel, Sprite, TextField } from "../../components/ui";
 import s from "../screens.module.css";
@@ -10,11 +11,11 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [notice, setNotice] = useState(false);
 
-  // UI demo: no account check, just go to the main menu.
   const submit = (e: FormEvent) => {
     e.preventDefault();
-    router.push("/menu");
+    setNotice(true);
   };
 
   return (
@@ -37,6 +38,7 @@ export default function LoginPage() {
           </form>
         </Panel>
       </div>
+      {notice && <AccountsNotice onClose={() => setNotice(false)} />}
     </Screen>
   );
 }

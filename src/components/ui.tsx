@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useMemo, useState, type CSSProperties, type ReactNode } from "react";
 import { assetRatio, assetUrl, type AssetName } from "../lib/assets";
-import { MAX_LIVES } from "../lib/mock";
+import { MAX_LIVES } from "../game/player";
 
 /* ── Sprite ──────────────────────────────────────────────────────────────── */
 
