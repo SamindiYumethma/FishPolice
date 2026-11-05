@@ -1,5 +1,6 @@
 import type { AssetName } from "../lib/assets";
 import { LEVEL_COUNT } from "./levels";
+import { MAX_REBIRTHS } from "./rebirth";
 
 export const MAX_LIVES = 3;
 export const NAME_MIN = 3;
@@ -27,6 +28,10 @@ export interface PlayerSave {
   highScore: number;
   /** The case being played right now. Still set on load means the player left mid-case. */
   activeCase: number | null;
+  /** Rebirth Challenges started in this run, whatever their result. */
+  rebirthsUsed: number;
+  /** The case that was just failed, while its one Rebirth Challenge is still on offer. */
+  rebirthOffer: number | null;
 }
 
 export function newSave(): PlayerSave {
@@ -40,6 +45,8 @@ export function newSave(): PlayerSave {
     caseScores: {},
     highScore: 0,
     activeCase: null,
+    rebirthsUsed: 0,
+    rebirthOffer: null,
   };
 }
 
@@ -65,7 +72,7 @@ export function canPlay(save: PlayerSave, level: number): boolean {
 }
 
 export function beginCase(save: PlayerSave, level: number): PlayerSave {
-  return canPlay(save, level) ? { ...save, activeCase: level } : save;
+  return canPlay(save, level) ? { ...save, activeCase: level, rebirthOffer: null } : save;
 }
 
 export function winCase(save: PlayerSave, level: number, score: number, stars: number): PlayerSave {
@@ -83,6 +90,25 @@ export function winCase(save: PlayerSave, level: number, score: number, stars: n
 export function failActiveCase(save: PlayerSave): PlayerSave {
   if (save.activeCase === null) return save;
   return { ...save, activeCase: null, lives: Math.max(0, save.lives - 1) };
+}
+
+/** Offers the one Rebirth Challenge for a case that was just failed, if the run has any left. */
+export function offerRebirth(save: PlayerSave, level: number): PlayerSave {
+  return save.rebirthsUsed < MAX_REBIRTHS ? { ...save, rebirthOffer: level } : save;
+}
+
+export function declineRebirth(save: PlayerSave): PlayerSave {
+  return { ...save, rebirthOffer: null };
+}
+
+/** Uses up the chance the moment the photo arrives, so refreshing can't swap a hard photo for a new one. */
+export function spendRebirth(save: PlayerSave): PlayerSave {
+  if (save.rebirthOffer === null) return save;
+  return { ...save, rebirthOffer: null, rebirthsUsed: save.rebirthsUsed + 1 };
+}
+
+export function winRebirth(save: PlayerSave): PlayerSave {
+  return { ...save, lives: Math.min(MAX_LIVES, save.lives + 1) };
 }
 
 /** Starts again from Case 1 after a game over, keeping the detective and the best score. */
@@ -123,6 +149,8 @@ export function parseSave(data: unknown): PlayerSave | null {
     caseScores: levelMap(raw.caseScores, 0, Number.MAX_SAFE_INTEGER),
     highScore: wholeNumber(raw.highScore, 0, Number.MAX_SAFE_INTEGER, 0),
     activeCase: typeof raw.activeCase === "number" ? wholeNumber(raw.activeCase, 1, LEVEL_COUNT, 1) : null,
+    rebirthsUsed: wholeNumber(raw.rebirthsUsed, 0, MAX_REBIRTHS, 0),
+    rebirthOffer: typeof raw.rebirthOffer === "number" ? wholeNumber(raw.rebirthOffer, 1, LEVEL_COUNT, 1) : null,
   };
 }
 

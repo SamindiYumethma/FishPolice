@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { LEVEL_COUNT } from "./levels";
-import { beginCase, canPlay, failActiveCase, MAX_LIVES, nameError, newSave, parseSave, runScore, startNewRun, winCase } from "./player";
+import { beginCase, canPlay, declineRebirth, failActiveCase, MAX_LIVES, nameError, newSave, offerRebirth, parseSave, runScore, spendRebirth, startNewRun, winCase, winRebirth } from "./player";
+import { MAX_REBIRTHS } from "./rebirth";
 
 describe("lives", () => {
   it("costs one life per failed case and can't be charged twice", () => {
@@ -48,6 +49,54 @@ describe("progress", () => {
     const old = { ...winCase(newSave(), 1, 500, 3), name: "Sam", avatar: "pink" as const, lives: 0 };
     const run = startNewRun(old);
     expect(run).toMatchObject({ name: "Sam", avatar: "pink", lives: MAX_LIVES, highestUnlocked: 1, highScore: 500, stars: {}, caseScores: {} });
+  });
+});
+
+describe("rebirth", () => {
+  const failed = (save = newSave()) => offerRebirth(failActiveCase(beginCase(save, 1)), 1);
+
+  it("offers one challenge after a failed case", () => {
+    expect(failed().rebirthOffer).toBe(1);
+  });
+
+  it("a chance can only be spent once", () => {
+    const spent = spendRebirth(failed());
+    expect(spent).toMatchObject({ rebirthOffer: null, rebirthsUsed: 1 });
+    expect(spendRebirth(spent)).toEqual(spent);
+  });
+
+  it("winning gives one life back, never more than the maximum", () => {
+    const save = failed();
+    expect(winRebirth(spendRebirth(save)).lives).toBe(MAX_LIVES);
+    expect(winRebirth({ ...newSave(), lives: MAX_LIVES }).lives).toBe(MAX_LIVES);
+  });
+
+  it("a lost challenge keeps the life lost", () => {
+    expect(spendRebirth(failed()).lives).toBe(MAX_LIVES - 1);
+  });
+
+  it("stops offering once the run has used them all, whatever the results were", () => {
+    let save = newSave();
+    for (let i = 0; i < MAX_REBIRTHS; i++) save = winRebirth(spendRebirth(failed(save)));
+    expect(save.rebirthsUsed).toBe(MAX_REBIRTHS);
+    expect(failed(save).rebirthOffer).toBeNull();
+  });
+
+  it("the offer ends when it is declined or the next case starts", () => {
+    expect(declineRebirth(failed()).rebirthOffer).toBeNull();
+    expect(beginCase(failed(), 1).rebirthOffer).toBeNull();
+  });
+
+  it("a new run gives all the rebirths back", () => {
+    const run = startNewRun({ ...newSave(), rebirthsUsed: MAX_REBIRTHS, rebirthOffer: 2, lives: 0 });
+    expect(run).toMatchObject({ rebirthsUsed: 0, rebirthOffer: null });
+  });
+
+  it("loads saves from before rebirths existed", () => {
+    const old: Record<string, unknown> = { ...newSave(), name: "Sam" };
+    delete old.rebirthsUsed;
+    delete old.rebirthOffer;
+    expect(parseSave(old)).toMatchObject({ rebirthsUsed: 0, rebirthOffer: null, activeCase: null });
   });
 });
 

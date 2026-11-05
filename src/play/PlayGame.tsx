@@ -4,7 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GameEngine, type CaseResult } from "../game/GameEngine";
 import { getLevel, LEVEL_COUNT } from "../game/levels";
-import { beginCase, canPlay, failActiveCase, winCase } from "../game/player";
+import { beginCase, canPlay, declineRebirth, failActiveCase, offerRebirth, winCase } from "../game/player";
+import { rebirthTimeLimit } from "../game/rebirth";
 import { usePlayer } from "../state/PlayerProvider";
 import { CaseRun } from "./CaseRun";
 import { Briefing, CaseFailed, ChestUnlocked } from "./PhaseScreens";
@@ -37,7 +38,7 @@ export function PlayGame({ level }: { level: number }) {
 
   const onFinished = useCallback(
     (result: CaseResult) => {
-      apply((current) => (result.outcome === "won" ? winCase(current, level, result.score, result.stars) : failActiveCase(current)));
+      apply((current) => (result.outcome === "won" ? winCase(current, level, result.score, result.stars) : offerRebirth(failActiveCase(current), level)));
       setPhase({ name: "result", result, livesBefore: livesBefore.current });
     },
     [apply, level],
@@ -77,9 +78,21 @@ export function PlayGame({ level }: { level: number }) {
       result={result}
       lives={save.lives}
       livesBefore={phase.livesBefore}
-      onRetry={() => setPhase({ name: "briefing" })}
-      onMap={toMap}
-      onGameOver={() => router.replace("/game-over")}
+      rebirthOffered={save.rebirthOffer !== null}
+      rebirthSeconds={rebirthTimeLimit(save.rebirthsUsed)}
+      onEarnBack={() => router.replace("/rebirth")}
+      onRetry={() => {
+        apply(declineRebirth);
+        setPhase({ name: "briefing" });
+      }}
+      onMap={() => {
+        apply(declineRebirth);
+        toMap();
+      }}
+      onGameOver={() => {
+        apply(declineRebirth);
+        router.replace("/game-over");
+      }}
     />
   );
 }

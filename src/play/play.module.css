@@ -630,7 +630,8 @@
 }
 .photo {
   position: relative;
-  width: 92cqw;
+  /* Smaller on short phones, so Submit fits on screen without scrolling against the clock. */
+  width: min(92cqw, 48cqh);
   aspect-ratio: 900 / 638;
   background: url("/assets/photo_frame.webp") center / 100% 100% no-repeat;
   display: flex;
@@ -646,7 +647,8 @@
   bottom: 15%;
   border-radius: 2.5cqw;
   overflow: hidden;
-  background: #0b4fb3;
+  /* The API's photos are transparent, and its blue fish would vanish on a dark background. */
+  background: #eaf7ff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -683,6 +685,7 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+  background: #eaf7ff;
   border-radius: 2cqw;
   border: 0.8cqw solid #ffd34a;
 }

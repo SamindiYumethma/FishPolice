@@ -5,6 +5,7 @@ import { CHARACTERS } from "../game/characters";
 import type { CaseResult } from "../game/GameEngine";
 import { caseLabel, type LevelConfig } from "../game/levels";
 import { runScore, type PlayerSave } from "../game/player";
+import type { RebirthAnswerResponse } from "../game/rebirth";
 import { assetUrl, type AssetName } from "../lib/assets";
 import { GameButton, Hearts, IconButton, Modal, Panel, Ribbon, Sprite } from "../components/ui";
 import { HowToPlay } from "../components/HowToPlay";
@@ -162,6 +163,9 @@ export function CaseFailed({
   result,
   lives,
   livesBefore,
+  rebirthOffered,
+  rebirthSeconds,
+  onEarnBack,
   onRetry,
   onMap,
   onGameOver,
@@ -169,6 +173,9 @@ export function CaseFailed({
   result: CaseResult;
   lives: number;
   livesBefore: number;
+  rebirthOffered: boolean;
+  rebirthSeconds: number;
+  onEarnBack: () => void;
   onRetry: () => void;
   onMap: () => void;
   onGameOver: () => void;
@@ -186,6 +193,12 @@ export function CaseFailed({
         </p>
         <Hearts lives={lives} animateFrom={livesBefore} size={11} />
         <div className={s.lifeLost}>−1 life</div>
+        {rebirthOffered && (
+          <>
+            <GameButton asset="btn_earn_it_back" label="Earn it back" width={56} onClick={onEarnBack} />
+            <p className={s.smallNote}>Rebirth Challenge: one chance, {rebirthSeconds} seconds</p>
+          </>
+        )}
         {lives > 0 ? (
           <>
             <GameButton asset="btn_retry" label="Retry" width={50} onClick={onRetry} />
@@ -193,9 +206,75 @@ export function CaseFailed({
               Back to map
             </button>
           </>
+        ) : rebirthOffered ? (
+          <GameButton asset="btn_give_up" label="Give up" width={40} onClick={onGameOver} />
         ) : (
           <GameButton asset="btn_continue" label="Continue" width={50} onClick={onGameOver} />
         )}
+      </Panel>
+    </div>
+  );
+}
+
+/* ── Life recovered ──────────────────────────────────────────────────────── */
+
+export function LifeRecovered({ lives, rebirthsLeft, onContinue }: { lives: number; rebirthsLeft: number; onContinue: () => void }) {
+  return (
+    <div className={s.phase} style={bg("bg_victory")}>
+      <Ribbon width={88} className="pop-in">
+        Life Recovered!
+      </Ribbon>
+      <Sprite name="rebirth_heart" width={46} className="pop-in" />
+      <Sprite name="hero_happy" width={36} className="float" />
+      <Hearts lives={lives} animateFrom={lives - 1} size={14} />
+      <Panel width={70}>
+        <p className={s.resultLine} style={{ margin: 0 }}>
+          Rebirths left: {rebirthsLeft}
+        </p>
+        <GameButton asset="btn_continue" label="Continue" width={48} onClick={onContinue} />
+      </Panel>
+    </div>
+  );
+}
+
+/* ── Rebirth failed ──────────────────────────────────────────────────────── */
+
+export function RebirthFailed({
+  result,
+  answer,
+  rebirthsLeft,
+  nextTimeLimit,
+  onContinue,
+}: {
+  result: RebirthAnswerResponse;
+  answer: { fish: number | null; chest: number | null; ranOut: boolean };
+  rebirthsLeft: number;
+  nextTimeLimit: number;
+  onContinue: () => void;
+}) {
+  const said = (value: number | null) => (value === null ? "no answer" : `you said ${value}`);
+  return (
+    <div className={s.phase} style={bg("bg_rebirth_challenge")}>
+      <Panel title={result.timedOut || answer.ranOut ? "Time's Up!" : "Not Quite!"} titleClass="title-red" className="pop-in">
+        <Sprite name="hero_sad" width={30} />
+        <p className={s.resultLine} style={{ margin: 0 }}>
+          The photo had:
+        </p>
+        <div className={s.answerReveal}>
+          <div>
+            <Sprite name="civilian_fish_blue" /> {result.fish}
+            {answer.fish !== result.fish && <span className={s.wrong}>{said(answer.fish)}</span>}
+          </div>
+          <div>
+            <Sprite name="chest_closed" /> {result.chest}
+            {answer.chest !== result.chest && <span className={s.wrong}>{said(answer.chest)}</span>}
+          </div>
+        </div>
+        <p className={s.smallNote}>
+          That life is gone.{" "}
+          {rebirthsLeft > 0 ? `Rebirths left: ${rebirthsLeft}. The next one gives you only ${nextTimeLimit} seconds!` : "You have no rebirths left this run."}
+        </p>
+        <GameButton asset="btn_continue" label="Continue" width={50} onClick={onContinue} />
       </Panel>
     </div>
   );

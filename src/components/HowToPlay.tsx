@@ -2,6 +2,7 @@
 
 import { CHARACTERS, pointsLabel, type Kind } from "../game/characters";
 import { MAX_LIVES } from "../game/player";
+import { MAX_REBIRTHS } from "../game/rebirth";
 import { GameButton, Modal, Panel, Sprite } from "./ui";
 import styles from "./HowToPlay.module.css";
 
@@ -35,6 +36,10 @@ export function HowToPlay({ onClose }: { onClose: () => void }) {
             <li>
               <Sprite name="heart_full" />
               <span>You have {MAX_LIVES} lives. Failing or leaving a case costs one. Lose them all and the run is over.</span>
+            </li>
+            <li>
+              <Sprite name="rebirth_heart" />
+              <span>Failed a case? Take the <b>Rebirth Challenge</b>: count the fish and chests in a photo to win the life back. You get <b>one chance</b> each time and {MAX_REBIRTHS} per run, with less time and busier photos every time.</span>
             </li>
           </ul>
         </div>

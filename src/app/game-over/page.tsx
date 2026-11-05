@@ -15,12 +15,15 @@ export default function GameOverPage() {
 
   // Only checked on arrival: starting a new run below also restores the lives.
   const arrivedWithLives = save.lives > 0;
+  // A refresh on the failed screen mustn't cost the player their Rebirth Challenge.
+  const rebirthOnOffer = save.lives === 0 && save.rebirthOffer !== null;
   useEffect(() => {
     if (arrivedWithLives) router.replace("/menu");
+    else if (rebirthOnOffer) router.replace("/rebirth");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!hasDetective) return null;
+  if (!hasDetective || rebirthOnOffer) return null;
 
   const finalScore = runScore(save);
   const newRecord = finalScore > 0 && finalScore === save.highScore;
